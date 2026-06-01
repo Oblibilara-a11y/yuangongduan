@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>员工端规划汇报 · 2024</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #111318;
+  --ink2: #3D4354;
+  --ink3: #7C8499;
+  --ink4: #B8BFD0;
+  --paper: #FAFBFC;
+  --paper2: #F2F4F8;
+  --paper3: #E8ECF4;
+  --line: #E2E6EF;
+  --line2: #CDD3E3;
+
+  --blue: #1A56DB;
+  --blue-light: #3B7DF8;
+  --blue-bg: #EEF3FF;
+  --blue-mid: #DBEAFE;
+  --red: #DC2626;
+  --red-bg: #FEF2F2;
+  --green: #059669;
+  --green-bg: #ECFDF5;
+  --amber: #D97706;
+  --amber-bg: #FFFBEB;
+  --teal: #0D9488;
+  --teal-bg: #F0FDFA;
+  --violet: #7C3AED;
+  --violet-bg: #F5F3FF;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ===== LAYOUT ===== */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===== SIDENAV ===== */
+.sidenav {
+  width: 240px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  background: #fff;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidenav-head {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sidenav-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.sidenav-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.sidenav-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+
+.sidenav-nav::-webkit-scrollbar { width: 3px; }
+.sidenav-nav::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 2px; }
+
+.nav-group { margin-bottom: 4px; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink3);
+  font-size: 13px;
+  font-weight: 400;
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+
+.nav-link:hover {
+  background: var(--paper2);
+  color: var(--ink);
+}
+
+.nav-link.active {
+  background: var(--blue-bg);
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.nav-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink4);
+  flex-shrink: 0;
+  width: 18px;
+}
+
+.nav-link.active .nav-num { color: var(--blue-light); }
+
+.sidenav-foot {
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--ink4);
+}
+
+/* ===== READING PROGRESS ===== */
+.read-progress {
+  position: fixed;
+  top: 0; left: 240px; right: 0;
+  height: 3px;
+  background: var(--line);
+  z-index: 200;
+}
+
+.read-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transition: width 0.1s linear;
+  width: 0%;
+}
+
+/* ===== MAIN ===== */
+.main {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ===== COVER ===== */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 64px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.cover-pattern {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 420px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      var(--line) 39px,
+      var(--line) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      var(--line) 39px,
+      var(--line) 40px
+    );
+  opacity: 0.5;
+}
+
+.cover-pattern::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #fff 0%, transparent 40%);
+}
+
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--blue);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  width: fit-content;
+}
+
+.cover-h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  max-width: 560px;
+}
+
+.cover-h1 em {
+  color: var(--blue);
+  font-style: normal;
+}
+
+.cover-lead {
+  font-size: 15px;
+  color: var(--ink2);
+  line-height: 1.9;
+  max-width: 480px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  width: fit-content;
+  background: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.cover-stat {
+  padding: 16px 28px;
+  border-right: 1px solid var(--line);
+  text-align: center;
+}
+
+.cover-stat:last-child { border-right: none; }
+
+.stat-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--ink3);
+  white-space: nowrap;
+}
+
+.cover-toc {
+  position: absolute;
+  right: 64px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.toc-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toc-item:last-child { border-bottom: none; }
+.toc-item:hover .toc-name { color: var(--blue); }
+
+.toc-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink4);
+  width: 20px;
+}
+
+.toc-name {
+  font-size: 13px;
+  color: var(--ink2);
+  transition: color 0.15s;
+}
+
+/* ===== SECTION ===== */
+.section {
+  padding: 72px 64px 80px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.section.alt { background: var(--paper); }
+
+.sec-head { margin-bottom: 48px; }
+
+.sec-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sec-chapter {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.sec-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.sec-h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+
+.sec-lead {
+  font-size: 14px;
+  color: var(--ink2);
+  max-width: 720px;
+  line-height: 1.9;
+}
+
+/* ===== MODULE CARDS ===== */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mod-card {
+  background: #fff;
+  padding: 24px 20px;
+  transition: background 0.2s;
+}
+
+.mod-card:hover { background: var(--paper2); }
+
+.mod-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.mod-icon.blue { background: var(--blue-bg); }
+.mod-icon.teal { background: var(--teal-bg); }
+.mod-icon.amber { background: var(--amber-bg); }
+.mod-icon.slate { background: var(--paper3); }
+
+.mod-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.mod-pv {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 3px;
+  line-height: 1;
+}
+
+.mod-pv.blue { color: var(--blue); }
+.mod-pv.teal { color: var(--teal); }
+.mod-pv.amber { color: var(--amber); }
+.mod-pv.slate { color: var(--ink3); }
+
+.mod-pv-label {
+  font-size: 10px;
+  color: var(--ink4);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.mod-desc {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.8;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.mod-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.mod-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--paper2);
+  color: var(--ink3);
+  border: 1px solid var(--line);
+}
+
+/* ===== CALLOUT ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--blue-bg);
+  border-radius: 0 8px 8px 0;
+  padding: 18px 24px;
+  margin-top: 20px;
+}
+
+.callout.amber { border-left-color: var(--amber); background: var(--amber-bg); }
+.callout.red { border-left-color: var(--red); background: var(--red-bg); }
+.callout.green { border-left-color: var(--green); background: var(--green-bg); }
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.callout.amber .callout-label { color: var(--amber); }
+.callout.red .callout-label { color: var(--red); }
+.callout.green .callout-label { color: var(--green); }
+
+.callout-text {
+  font-size: 13.5px;
+  color: var(--ink);
+  line-height: 1.9;
+}
+
+/* ===== DATA TABLE ===== */
+.tbl-wrap {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--paper2);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink3);
+  padding: 11px 16px;
+  text-align: left;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--line);
+}
+
+td {
+  padding: 11px 16px;
+  font-size: 13px;
+  color: var(--ink2);
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--paper2); }
+
+.td-name { color: var(--ink); font-weight: 500; }
+.td-pv { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--ink); }
+.td-pv.high { color: var(--blue); }
+.td-pv.low { color: var(--red); }
+.td-note { font-size: 12px; color: var(--ink3); }
+
+.inline-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ibar-track {
+  width: 100px;
+  height: 5px;
+  background: var(--paper3);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ibar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.fill-blue { background: var(--blue-light); }
+.fill-teal { background: var(--teal); }
+.fill-amber { background: var(--amber); }
+.fill-red { background: #FCA5A5; }
+.fill-slate { background: var(--ink4); }
+
+/* ===== PV CHART ===== */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.chart-box {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-box-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-box-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.bar-group { display: flex; flex-direction: column; gap: 9px; }
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar-lbl {
+  font-size: 11px;
+  color: var(--ink2);
+  width: 72px;
+  text-align: right;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--paper2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink2);
+  width: 42px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===== PROBLEM CARDS ===== */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prob-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.prob-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--line2);
+}
+
+.prob-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.prob-card.c1::before { background: linear-gradient(90deg, var(--red), #FB923C); }
+.prob-card.c2::before { background: linear-gradient(90deg, var(--amber), #FCD34D); }
+.prob-card.c3::before { background: linear-gradient(90deg, var(--violet), var(--blue)); }
+
+.prob-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink4);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.prob-icon {
+  font-size: 24px;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.prob-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.prob-body {
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+
+.prob-data {
+  font-size: 11px;
+  color: var(--ink3);
+  background: var(--paper2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  line-height: 1.8;
+  border: 1px solid var(--line);
+}
+
+.prob-data strong { color: var(--red); font-family: 'DM Mono', monospace; }
+
+/* ===== BEFORE/AFTER ===== */
+.ba-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  align-items: stretch;
+  margin-top: 28px;
+}
+
+.ba-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.ba-card.before { border-top: 3px solid var(--red); }
+.ba-card.after { border-top: 3px solid var(--green); }
+
+.ba-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.ba-card.before .ba-label { color: var(--red); }
+.ba-card.after .ba-label { color: var(--green); }
+
+.ba-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--ink2);
+  line-height: 1.6;
+  align-items: flex-start;
+}
+
+.ba-item:last-child { border-bottom: none; }
+
+.ba-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ba-arr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--ink4);
+  padding-top: 8px;
+  align-self: center;
+}
+
+/* ===== STRATEGY ===== */
+.strategy-wrap { display: flex; flex-direction: column; gap: 24px; }
+
+.strat-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.strat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.strat-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.strat-badge {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border: 1px solid var(--blue-mid);
+}
+
+.strat-badge.teal { background: var(--teal-bg); color: var(--teal); border-color: #99F6E4; }
+
+.strat-questions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.strat-q {
+  padding: 7px 14px;
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--ink2);
+  font-weight: 500;
+}
+
+.strat-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.strat-item {
+  padding: 14px;
+  background: var(--paper2);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  transition: all 0.15s;
+}
+
+.strat-item:hover {
+  background: var(--blue-bg);
+  border-color: var(--blue-mid);
+}
+
+.strat-item:hover .strat-item-name { color: var(--blue); }
+
+.strat-item-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.strat-item-name::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+.strat-item-body {
+  font-size: 11.5px;
+  color: var(--ink3);
+  line-height: 1.7;
+}
+
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.prod-item {
+  padding: 16px;
+  background: var(--paper2);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  transition: all 0.15s;
+}
+
+.prod-item:hover {
+  background: var(--teal-bg);
+  border-color: #99F6E4;
+}
+
+.prod-item-icon { font-size: 20px; margin-bottom: 10px; }
+.prod-item-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.prod-item-body { font-size: 11.5px; color: var(--ink3); line-height: 1.7; }
+
+.strat-note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--teal-bg);
+  border: 1px solid #99F6E4;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--teal);
+  line-height: 1.7;
+}
+
+/* ===== BOUNDARY ===== */
+.bound-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.bound-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.bound-card:hover { box-shadow: var(--shadow-md); }
+
+.bound-head {
+  padding: 16px 20px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bound-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.bound-icon.b1 { background: var(--blue-bg); }
+.bound-icon.b2 { background: var(--teal-bg); }
+.bound-icon.b3 { background: var(--paper3); }
+
+.bound-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.bound-sub { font-size: 11px; color: var(--ink3); margin-top: 1px; }
+
+.bound-body { padding: 16px 20px; }
+
+.bound-row {
+  padding: 9px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--ink2);
+  line-height: 1.7;
+  border-left: 2px solid var(--line);
+}
+
+.bound-row.mine {
+  border-left-color: var(--blue);
+  background: var(--blue-bg);
+  color: var(--ink);
+}
+
+.bound-row-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.bound-row.mine .bound-row-label { color: var(--blue); }
+.bound-row:not(.mine) .bound-row-label { color: var(--ink4); }
+
+.bound-summary {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--paper2);
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: var(--ink3);
+  line-height: 1.7;
+  border: 1px solid var(--line);
+  font-style: italic;
+}
+
+/* ===== FINAL SUMMARY ===== */
+.final-box {
+  margin-top: 36px;
+  padding: 32px 36px;
+  background: var(--ink);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--teal), var(--green));
+}
+
+.final-box-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 16px;
+}
+
+.final-box-text {
+  font-size: 16px;
+  color: #fff;
+  line-height: 2;
+  font-weight: 300;
+}
+
+.final-box-text strong { color: #93C5FD; font-weight: 600; }
+.final-box-text em { color: #6EE7B7; font-style: normal; font-weight: 600; }
+.final-box-text mark {
+  background: none;
+  color: #FCD34D;
+  font-weight: 600;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+  .prod-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="read-progress"><div class="read-progress-fill" id="rpf"></div></div>
+
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-head">
+    <div class="sidenav-eyebrow">规划汇报 · 2024</div>
+    <div class="sidenav-title">员工端<br>产品规划</div>
+  </div>
+  <div class="sidenav-nav">
+    <div class="nav-group">
+      <a class="nav-link active" href="#cover">
+        <span class="nav-num">00</span>概览
+      </a>
+      <a class="nav-link" href="#s1">
+        <span class="nav-num">01</span>功能结构与定位
+      </a>
+      <a class="nav-link" href="#s2">
+        <span class="nav-num">02</span>各模块现状分析
+      </a>
+      <a class="nav-link" href="#s3">
+        <span class="nav-num">03</span>理财模块核心问题
+      </a>
+      <a class="nav-link" href="#s4">
+        <span class="nav-num">04</span>理财模块优化方向
+      </a>
+      <a class="nav-link" href="#s5">
+        <span class="nav-num">05</span>模块边界划定
+      </a>
+    </div>
+  </div>
+  <div class="sidenav-foot">产品规划部 · 内部文件</div>
+</nav>
+
+<main class="main">
+
+<!-- ===== COVER ===== -->
+<section class="cover" id="cover">
+  <div class="cover-pattern"></div>
+  <div class="cover-badge">
+    <span style="width:6px;height:6px;background:var(--blue);border-radius:50%;display:inline-block;"></span>
+    Internal · Product Planning
+  </div>
+  <h1 class="cover-h1">员工端<br><em>规划汇报</em></h1>
+  <p class="cover-lead">面向一线员工的客户经营工作台——基于数据的现状诊断与理财模块转型策略</p>
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <div class="stat-val">4</div>
+      <div class="stat-label">核心模块</div>
+    </div>
+    <div class="cover-stat">
+      <div class="stat-val">22,164</div>
+      <div class="stat-label">首页日均 PV</div>
+    </div>
+    <div class="cover-stat">
+      <div class="stat-val">16×</div>
+      <div class="stat-label">客户查询 / 理财 PV 差</div>
+    </div>
+    <div class="cover-stat">
+      <div class="stat-val">3</div>
+      <div class="stat-label">待解决核心问题</div>
+    </div>
+  </div>
+
+  <div class="cover-toc">
+    <div class="toc-title">目录 · Contents</div>
+    <div class="toc-item" onclick="goto('s1')"><span class="toc-num">01</span><span class="toc-name">功能结构与定位</span></div>
+    <div class="toc-item" onclick="goto('s2')"><span class="toc-num">02</span><span class="toc-name">各模块现状分析</span></div>
+    <div class="toc-item" onclick="goto('s3')"><span class="toc-num">03</span><span class="toc-name">理财模块核心问题</span></div>
+    <div class="toc-item" onclick="goto('s4')"><span class="toc-num">04</span><span class="toc-name">理财模块优化方向</span></div>
+    <div class="toc-item" onclick="goto('s5')"><span class="toc-num">05</span><span class="toc-name">模块边界划定</span></div>
+  </div>
+</section>
+
+<!-- ===== S1 ===== -->
+<section class="section" id="s1">
+  <div class="sec-head">
+    <div class="sec-eyebrow">
+      <span class="sec-chapter">Chapter 01</span>
+      <div class="sec-divider"></div>
+    </div>
+    <h2 class="sec-h2">功能结构与整体定位</h2>
+    <p class="sec-lead">员工端目前已形成四个主要区域，整体定位为<strong>面向一线员工的客户经营工作台</strong>，帮助员工完成从客户识别、了解客户、提供服务、机会发现到服务触达的完整闭环。</p>
+  </div>
+
+  <div class="module-grid fade-up">
+    <div class="mod-card">
+      <div class="mod-icon blue">🏠</div>
+      <div class="mod-name">首页</div>
+      <div class="mod-pv blue">22,164</div>
+      <div class="mod-pv-label">日均 PV · 最高频入口</div>
+      <div class="mod-desc">承接日常工作入口和经营提醒，解决"今天要看什么、先做什么"的问题。聚合快捷应用、任务、消息、营销海报等能力。</div>
+      <div class="mod-tags">
+        <span class="mod-tag">快速进入高频功能</span>
+        <span class="mod-tag">当前经营状态</span>
+        <span class="mod-tag">获取展业材料</span>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon teal">👤</div>
+      <div class="mod-name">客户查询</div>
+      <div class="mod-pv teal">10,100</div>
+      <div class="mod-pv-label">日均 PV · 客户经营基础</div>
+      <div class="mod-desc">承接客户查询、客户画像、账户资产、动态事件等信息，解决"客户是谁、有哪些标签、具备什么特征"的问题。</div>
+      <div class="mod-tags">
+        <span class="mod-tag">找到客户</span>
+        <span class="mod-tag">看懂客户</span>
+        <span class="mod-tag">判断服务机会</span>
+        <span class="mod-tag">发起联系</span>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon amber">💰</div>
+      <div class="mod-name">理财</div>
+      <div class="mod-pv amber">635</div>
+      <div class="mod-pv-label">日均 PV · 有待优化转型</div>
+      <div class="mod-desc">承接理财产品、持仓客户、机会客户、展业物料等能力，解决"围绕理财产品和客户持仓，如何发现机会并推动服务"的问题。</div>
+      <div class="mod-tags">
+        <span class="mod-tag">看产品</span>
+        <span class="mod-tag">找客户</span>
+        <span class="mod-tag">找机会</span>
+        <span class="mod-tag">做展业</span>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-icon slate">⚙️</div>
+      <div class="mod-name">个人中心</div>
+      <div class="mod-pv slate">180</div>
+      <div class="mod-pv-label">日均 PV · 低频基础管理</div>
+      <div class="mod-desc">承接个人信息、设置、身份相关能力，保障员工账号、权限、设置等基础体验稳定可用，符合低频基础管理特征。</div>
+      <div class="mod-tags">
+        <span class="mod-tag">账号管理</span>
+        <span class="mod-tag">权限设置</span>
+        <span class="mod-tag">身份信息</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout fade-up">
+    <div class="callout-label">整体定位</div>
+    <div class="callout-text">员工端以<strong>首页</strong>作为统一入口，以<strong>客户视图</strong>作为客户经营底座，以<strong>理财等业务模块</strong>作为专项展业工具，最终帮助员工完成从<strong>客户识别 → 了解客户 → 提供服务 → 机会发现 → 服务触达</strong>的完整闭环。</div>
+  </div>
+</section>
+
+<!-- ===== S2 ===== -->
+<section class="section alt" id="s2">
+  <div class="sec-head">
+    <div class="sec-eyebrow">
+      <span class="sec-chapter">Chapter 02</span>
+      <div class="sec-divider"></div>
+    </div>
+    <h2 class="sec-h2">各模块现状分析</h2>
+    <p class="sec-lead">基于近3个月埋点数据，深入分析各模块实际使用情况，聚焦理财模块内部的显著差异，揭示员工真实需求分布。</p>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-grid fade-up">
+    <div class="chart-box">
+      <div class="chart-box-title">
+        模块日均 PV 概览
+        <span class="chart-box-badge">近3个月均值</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-row">
+          <div class="bar-lbl">首页</div>
+          <div class="bar-track"><div class="bar-fill fill-blue" style="width:100%"></div></div>
+          <div class="bar-val">22,164</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">客户查询</div>
+          <div class="bar-track"><div class="bar-fill fill-teal" style="width:45.6%"></div></div>
+          <div class="bar-val">10,100</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">理财</div>
+          <div class="bar-track"><div class="bar-fill fill-amber" style="width:2.9%"></div></div>
+          <div class="bar-val">635</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">个人中心</div>
+          <div class="bar-track"><div class="bar-fill fill-slate" style="width:0.8%"></div></div>
+          <div class="bar-val">180</div>
+        </div>
+      </div>
+      <div style="margin-top:16px; padding:10px 12px; background:var(--red-bg); border-radius:6px; border:1px solid #FECACA; font-size:11.5px; color:var(--red); line-height:1.7;">
+        客户查询是理财的 <strong>16 倍</strong>，说明员工更关注和客户相关的信息
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-box-title">
+        客户查询埋点详情
+        <span class="chart-box-badge">查看型 → 行动型差距明显</span>
+      </div>
+      <div class="bar-group">
+        <div class="bar-row">
+          <div class="bar-lbl">客户全景</div>
+          <div class="bar-track"><div class="bar-fill fill-teal" style="width:100%"></div></div>
+          <div class="bar-val">4,291</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">客户搜索</div>
+          <div class="bar-track"><div class="bar-fill fill-teal" style="width:86.9%"></div></div>
+          <div class="bar-val">3,728</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">用户 tab</div>
+          <div class="bar-track"><div class="bar-fill fill-teal" style="width:16.7%"></div></div>
+          <div class="bar-val">718</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">企微联系</div>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:2.5%"></div></div>
+          <div class="bar-val">106</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">筛选</div>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:0.4%"></div></div>
+          <div class="bar-val">19</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl">即时通讯</div>
+          <div class="bar-track"><div class="bar-fill fill-red" style="width:0.3%"></div></div>
+          <div class="bar-val">13</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 理财模块埋点表 -->
+  <div class="fade-up" style="margin-bottom: 12px;">
+    <div style="font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">理财模块埋点明细（近3个月日均PV）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>功能点</th>
+            <th>日均 PV</th>
+            <th>相对占比</th>
+            <th>核心洞察</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-name">持仓客户</td>
+            <td><span class="td-pv high">2,928</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-blue" style="width:100%"></div></div></div></td>
+            <td class="td-note">员工最关注"哪些客户和产品有关"</td>
+          </tr>
+          <tr>
+            <td class="td-name">关注的产品</td>
+            <td><span class="td-pv high">1,088</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-blue" style="width:37%"></div></div></div></td>
+            <td class="td-note">产品关注与客户需求有较强关联</td>
+          </tr>
+          <tr>
+            <td>产品类型筛选</td>
+            <td><span class="td-pv">522</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:17.8%"></div></div></div></td>
+            <td class="td-note">需按业务场景快速筛选产品</td>
+          </tr>
+          <tr>
+            <td>组合</td>
+            <td><span class="td-pv">520</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:17.8%"></div></div></div></td>
+            <td class="td-note">组合类产品关注度较高</td>
+          </tr>
+          <tr>
+            <td>产品卡片</td>
+            <td><span class="td-pv">406</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:13.9%"></div></div></div></td>
+            <td class="td-note">产品浏览有一定使用基础</td>
+          </tr>
+          <tr>
+            <td>搜索</td>
+            <td><span class="td-pv">194</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:6.6%"></div></div></div></td>
+            <td class="td-note">主动查找需求存在，但非最高频</td>
+          </tr>
+          <tr>
+            <td>客户交易记录</td>
+            <td><span class="td-pv">124</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:4.2%"></div></div></div></td>
+            <td class="td-note">员工会下钻查看客户交易行为</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">私募 tab</td>
+            <td><span class="td-pv">79</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-slate" style="width:2.7%;opacity:0.5"></div></div></div></td>
+            <td class="td-note" style="color:var(--ink4)">私募关注度相对较低</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">客户资产查询</td>
+            <td><span class="td-pv">36</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-red" style="width:1.2%"></div></div></div></td>
+            <td class="td-note" style="color:var(--red)">理财内直接查资产的动作较少 ⚠</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">公募 tab</td>
+            <td><span class="td-pv low">32</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-red" style="width:1.1%"></div></div></div></td>
+            <td class="td-note" style="color:var(--red)">入口或信息组织方式需调整 ⚠</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">分享</td>
+            <td><span class="td-pv low">32</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-red" style="width:1.1%"></div></div></div></td>
+            <td class="td-note" style="color:var(--red)">产品→客户触达动作极弱 ⚠</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">对产品加关注</td>
+            <td><span class="td-pv low">12</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-red" style="width:0.4%"></div></div></div></td>
+            <td class="td-note" style="color:var(--red)">产品沉淀动作极弱 ⚠</td>
+          </tr>
+          <tr>
+            <td style="color:var(--ink3)">客户组合运作报告</td>
+            <td><span class="td-pv low">12</span></td>
+            <td><div class="inline-bar"><div class="ibar-track"><div class="ibar-fill fill-red" style="width:0.4%"></div></div></div></td>
+            <td class="td-note" style="color:var(--red)">深度材料使用偏弱 ⚠</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout amber fade-up">
+    <div class="callout-label">核心判断</div>
+    <div class="callout-text">理财模块日均访问量低，<strong>不是因为没有使用价值</strong>，而是员工真正高频使用的是"围绕客户的理财信息"，而不是单纯浏览产品。员工进入理财模块时，更关心<strong>"这个产品对应哪些客户、这个客户有什么理财服务机会"</strong>，而不是先从产品货架开始浏览。</div>
+  </div>
+</section>
+
+<!-- ===== S3 ===== -->
+<section class="section" id="s3">
+  <div class="sec-head">
+    <div class="sec-eyebrow">
+      <span class="sec-chapter">Chapter 03</span>
+      <div class="sec-divider"></div>
+    </div>
+    <h2 class="sec-h2">理财模块核心问题</h2>
+    <p class="sec-lead">客户查询日均PV <strong>10,100</strong>，理财日均PV <strong>635</strong>，相差 <strong>16 倍</strong>。结合数据与页面结构，理财员工端当前暴露三个核心问题：</p>
+  </div>
+
+  <div class="problem-grid fade-up">
+    <div class="prob-card c1">
+      <div class="prob-num">PROBLEM 01</div>
+      <div class="prob-icon">📦</div>
+      <div class="prob-title">定位偏"产品货架"<br>需求偏"客户经营"</div>
+      <div class="prob-body">按"产品分类、产品列表、产品详情"组织能力，员工需要自己把产品信息和客户机会拼起来，使用链路偏长，不符合员工实际工作逻辑。</div>
+      <div class="prob-data">
+        持仓客户 <strong>2,928</strong> vs 产品卡片 <strong>406</strong><br>
+        分享仅 <strong>32</strong>，展业转化极低<br>
+        员工若只看产品列表，用客户端亦可
+      </div>
+    </div>
+    <div class="prob-card c2">
+      <div class="prob-num">PROBLEM 02</div>
+      <div class="prob-icon">👁️</div>
+      <div class="prob-title">信息查看强<br>经营动作弱</div>
+      <div class="prob-body">已解决"看见信息"问题，但没有充分解决"下一步该做什么、怎么做、用什么话术或材料触达客户"的问题，查看到行动的链路断裂。</div>
+      <div class="prob-data">
+        浏览/搜索动作高频<br>
+        筛选 <strong>19</strong>、联系 <strong>106</strong>、分享 <strong>32</strong> 均极低<br>
+        信息 → 行动的转化路径缺失
+      </div>
+    </div>
+    <div class="prob-card c3">
+      <div class="prob-num">PROBLEM 03</div>
+      <div class="prob-icon">🔀</div>
+      <div class="prob-title">理财与客户视图<br>边界不够清晰</div>
+      <div class="prob-body">两个模块均有客户资产、账户、动态等信息，边界不清导致员工选择困难，两个模块重复建设，难以形成各自清晰的主线价值。</div>
+      <div class="prob-data">
+        客户视图：资产、账户、动态、服务<br>
+        理财：也有客户资产查询、持仓客户<br>
+        → 模块定位重叠，员工不知从哪进
+      </div>
+    </div>
+  </div>
+
+  <!-- Before/After -->
+  <div class="ba-wrap fade-up">
+    <div class="ba-card before">
+      <div class="ba-label">现状痛点</div>
+      <div class="ba-item"><span class="ba-icon">✗</span>进入理财先看产品货架，客户机会需自行拼凑</div>
+      <div class="ba-item"><span class="ba-icon">✗</span>产品和客户信息分散，缺乏关联展示</div>
+      <div class="ba-item"><span class="ba-icon">✗</span>展业动作（分享、联系）入口深，转化率极低</div>
+      <div class="ba-item"><span class="ba-icon">✗</span>客户视图与理财重叠，员工选择困难</div>
+      <div class="ba-item"><span class="ba-icon">✗</span>产品对比、日历等选品工具缺失</div>
+    </div>
+    <div class="ba-arr">→</div>
+    <div class="ba-card after">
+      <div class="ba-label">优化目标</div>
+      <div class="ba-item"><span class="ba-icon">✓</span>以持仓客户为核心入口，先看客户再看产品</div>
+      <div class="ba-item"><span class="ba-icon">✓</span>产品卡片直接关联机会客户，建立产品客户关系</div>
+      <div class="ba-item"><span class="ba-icon">✓</span>展业物料与机会客户绑定，支持一键触达</div>
+      <div class="ba-item"><span class="ba-icon">✓</span>清晰划定边界：客户全景 vs 理财经营</div>
+      <div class="ba-item"><span class="ba-icon">✓</span>引入产品筛选、对比、日历、智能体工具</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== S4 ===== -->
+<section class="section alt" id="s4">
+  <div class="sec-head">
+    <div class="sec-eyebrow">
+      <span class="sec-chapter">Chapter 04</span>
+      <div class="sec-divider"></div>
+    </div>
+    <h2 class="sec-h2">理财模块优化方向</h2>
+    <p class="sec-lead">建议从<strong style="color:var(--red)">「产品货架」</strong>形式的产品中心，调整为<strong style="color:var(--green)">「理财客户经营中心」</strong>，围绕客户经营动作重新组织能力与入口。</p>
+  </div>
+
+  <div class="strategy-wrap">
+
+    <!-- 策略一 -->
+    <div class="strat-card fade-up">
+      <div class="strat-head">
+        <div class="strat-title">策略一：客户维度——围绕"客户持仓产品—分析—建议方案"组织信息入口</div>
+        <div class="strat-badge">首页级定位 · 机会发现 + 展业执行</div>
+      </div>
+
+      <div class="strat-questions">
+        <div class="strat-q">❶ 哪些客户现在有理财服务机会？</div>
+        <div class="strat-q">❷ 这些机会为什么成立？</div>
+        <div class="strat-q">❸ 员工下一步用什么方式触达？</div>
+      </div>
+
+      <div class="strat-items">
+        <div class="strat-item">
+          <div class="strat-item-name">持仓客户（核心入口）</div>
+          <div class="strat-item-body">员工最常用，作为理财模块核心首屏入口，替代现有产品列表</div>
+        </div>
+        <div class="strat-item">
+          <div class="strat-item-name">持仓诊断与分析</div>
+          <div class="strat-item-body">持仓标的、市值、收益、持仓天数；收益/回撤走势；交易记录总结</div>
+        </div>
+        <div class="strat-item">
+          <div class="strat-item-name">资产配置建议书</div>
+          <div class="strat-item-body">以客户持仓为出发点生成配置建议，方便员工与客户沟通展示</div>
+        </div>
+        <div class="strat-item">
+          <div class="strat-item-name">产品机会客户</div>
+          <div class="strat-item-body">基于持仓、关注、风险偏好、产品适配等逻辑形成智能推荐</div>
+        </div>
+        <div class="strat-item">
+          <div class="strat-item-name">展业物料（绑定机会）</div>
+          <div class="strat-item-body">与机会客户绑定，而非独立素材库；支持联系客户、发送材料</div>
+        </div>
+        <div class="strat-item">
+          <div class="strat-item-name">风险提示与合规</div>
+          <div class="strat-item-body">适配性检查、风险等级匹配、合规话术嵌入展业动作</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 策略二 -->
+    <div class="strat-card fade-up">
+      <div class="strat-head">
+        <div class="strat-title">策略二：产品维度——从"展示产品"变成"支持员工选择产品"</div>
+        <div class="strat-badge teal">辅助展业 · 资产配置逻辑</div>
+      </div>
+
+      <div class="prod-grid" style="margin-bottom:14px;">
+        <div class="prod-item">
+          <div class="prod-item-icon">🔍</div>
+          <div class="prod-item-name">产品筛选与排行</div>
+          <div class="prod-item-body">根据指标进行排行与多维筛选，在资产配置逻辑下快速选品</div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-item-icon">⚖️</div>
+          <div class="prod-item-name">产品对比</div>
+          <div class="prod-item-body">多产品并排对比核心指标，辅助员工向客户推荐最适合的产品</div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-item-icon">📅</div>
+          <div class="prod-item-name">理财日历</div>
+          <div class="prod-item-body">产品开售日、赎回日查询，帮助做好资金承接，提前规划展业节奏</div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-item-icon">🤖</div>
+          <div class="prod-item-name">智能体查询</div>
+          <div class="prod-item-body">高效查询产品要素与卖点，也可应用于产品对比，提升展业效率</div>
+        </div>
+      </div>
+
+      <div class="strat-note">
+        <strong>产品卡片升级：</strong>直接关联"关注该产品的客户、机会客户"，让产品和客户之间建立关联关系 &nbsp;·&nbsp;
+        <strong>产品详情页升级：</strong>突出展业信息——产品适合什么客户、核心卖点、可转发营销材料、产品运作报告
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== S5 ===== -->
+<section class="section" id="s5">
+  <div class="sec-head">
+    <div class="sec-eyebrow">
+      <span class="sec-chapter">Chapter 05</span>
+      <div class="sec-divider"></div>
+    </div>
+    <h2 class="sec-h2">模块边界划定</h2>
+    <p class="sec-lead">明确各模块职责边界，避免重复建设，帮助员工形成清晰的使用心智。</p>
+  </div>
+
+  <div class="bound-grid fade-up">
+    <div class="bound-card">
+      <div class="bound-head">
+        <div class="bound-icon b1">🏠</div>
+        <div>
+          <div class="bound-name">首页 vs 理财</div>
+          <div class="bound-sub">分发提醒 vs 执行工具</div>
+        </div>
+      </div>
+      <div class="bound-body">
+        <div class="bound-row">
+          <div class="bound-row-label">首页</div>
+          负责"分发和提醒"，可展示理财机会提醒、待跟进客户、重点产品提示，但不承载复杂理财业务
+        </div>
+        <div class="bound-row mine">
+          <div class="bound-row-label">理财</div>
+          员工点击首页提醒后，进入理财模块完成具体分析和展业动作
+        </div>
+        <div class="bound-summary">首页 = 触点提醒入口 &nbsp;→&nbsp; 理财 = 业务执行场</div>
+      </div>
+    </div>
+
+    <div class="bound-card">
+      <div class="bound-head">
+        <div class="bound-icon b2">👤</div>
+        <div>
+          <div class="bound-name">客户视图 vs 理财</div>
+          <div class="bound-sub">客户全景 vs 理财经营</div>
+        </div>
+      </div>
+      <div class="bound-body">
+        <div class="bound-row">
+          <div class="bound-row-label">客户视图</div>
+          展示客户基础信息、账户、资产、动态、服务等<strong>全量信息</strong>，回答"这个客户整体是什么情况"
+        </div>
+        <div class="bound-row mine">
+          <div class="bound-row-label">理财</div>
+          只承接理财相关：持仓诊断、配置建议、机会客户、展业动作；回答"围绕理财，我现在能做什么"
+        </div>
+        <div class="bound-summary">客户视图 = "整体是什么情况" &nbsp;→&nbsp; 理财 = "我现在能做什么"</div>
+      </div>
+    </div>
+
+    <div class="bound-card">
+      <div class="bound-head">
+        <div class="bound-icon b3">⚙️</div>
+        <div>
+          <div class="bound-name">个人中心 vs 理财</div>
+          <div class="bound-sub">个人管理 vs 业务经营</div>
+        </div>
+      </div>
+      <div class="bound-body">
+        <div class="bound-row">
+          <div class="bound-row-label">个人中心</div>
+          负责员工个人管理，不承接经营动作；理财权限、合规资质在此展示或维护
+        </div>
+        <div class="bound-row mine">
+          <div class="bound-row-label">理财</div>
+          具体业务动作仍应回到理财模块完成，个人中心仅做资质管理
+        </div>
+        <div class="bound-summary">个人中心 = 资质与权限管理 &nbsp;→&nbsp; 理财 = 业务执行主场</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="final-box fade-up">
+    <div class="final-box-title">核心结论 · Key Takeaway</div>
+    <div class="final-box-text">
+      理财员工端应从<strong>产品货架</strong>转型为<em>理财客户经营中心</em>，
+      以<mark>持仓客户</mark>为核心入口，构建<strong>机会发现 + 展业执行</strong>的完整闭环，
+      同时补充产品筛选、对比、日历、智能体等选品工具，
+      最终推动员工实现从<em>信息查看 → 机会识别 → 服务触达</em>的高效转化。
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('rpf').style.width = (scrolled / total * 100) + '%';
+});
+
+// Nav active
+const sectionIds = ['cover','s1','s2','s3','s4','s5'];
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.25 });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if(el) observer.observe(el);
+});
+
+// Goto
+function goto(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Scroll reveal
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-up').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.06 + 's';
+  revealObs.observe(el);
+});
+
+// Animate bars on scroll
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill, .ibar-fill').forEach(b => {
+        const w = b.style.width;
+        b.style.width = '0%';
+        setTimeout(() => b.style.width = w, 50);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.chart-box, .tbl-wrap').forEach(el => barObs.observe(el));
+</script>
+</body>
+</html>
